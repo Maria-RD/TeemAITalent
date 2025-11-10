@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <h1>TeemAI Talent - Employee Management</h1>
+
+  <!-- Search Bar -->
+  <div class="row mb-3" *ngIf="!isEditing">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search by name or ID"
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()">
+        <button class="btn btn-primary" (click)="onSearch()">Search</button>
+      </div>
+    </div>
+    <div class="col-md-6 text-end">
+      <button class="btn btn-success" (click)="onNew()">+ New Employee</button>
+    </div>
+  </div>
+
+  <!-- Employee Form -->
+  <div class="card mb-3" *ngIf="isEditing && selectedEmployee">
+    <div class="card-body">
+      <h5 class="card-title">{{ selectedEmployee.id === 0 ? 'New Employee' : 'Edit Employee' }}</h5>
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" [(ngModel)]="selectedEmployee.fullName" name="fullName" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hire Date</label>
+          <input type="date" class="form-control" [(ngModel)]="selectedEmployee.hireDate" name="hireDate" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Position</label>
+          <input type="text" class="form-control" [(ngModel)]="selectedEmployee.position" name="position" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Salary</label>
+          <input type="number" class="form-control" [(ngModel)]="selectedEmployee.salary" name="salary" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Department</label>
+          <input type="text" class="form-control" [(ngModel)]="selectedEmployee.department" name="department" required>
+        </div>
+        <button type="button" class="btn btn-primary me-2" (click)="onSave()">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Employee Table -->
+  <table class="table table-striped" *ngIf="!isEditing">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Hire Date</th>
+        <th>Position</th>
+        <th>Salary</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.fullName }}</td>
+        <td>{{ employee.hireDate | date }}</td>
+        <td>{{ employee.position }}</td>
+        <td>{{ employee.salary | currency }}</td>
+        <td>{{ employee.department }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="onEdit(employee)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="onDelete(employee.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
