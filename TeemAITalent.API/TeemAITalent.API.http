@@ -1,0 +1,6 @@
+@TeemAITalent.API_HostAddress = http://localhost:5267
+
+GET {{TeemAITalent.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
